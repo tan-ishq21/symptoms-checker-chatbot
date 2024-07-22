@@ -167,7 +167,7 @@ export async function POST(request) {
     "cardiac enzyme tests", "troponin", "CK-MB", "BNP", 
     "C-reactive protein", "D-dimer", "electrolytes", 
     "blood gas analysis", "lactic acid", "BUN", "creatinine", 
-    "urinalysis", "urine culture", "urine test strip", 
+    "urinalysis", "urine culture", "urine", "test strip", 
     "microscopic urinalysis", "24-hour urine collection", 
     "urine protein", "urine glucose", "urine ketones", 
     "urine bilirubin", "urine pH", "urine specific gravity", 
