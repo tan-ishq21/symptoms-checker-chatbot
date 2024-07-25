@@ -1,16 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ChatMessage from './ChatMessage';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
-
+import Image from 'next/image';
+import BotImage from '@/public/bot-image.webp'
 const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const textareaRef = useRef(null);
   const predefinedPrompts = [
     "What could be causing my headache?",
     "Why do I have a sore throat?",
@@ -42,6 +44,26 @@ const ChatBot = () => {
     setInput('');
   };
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        handleSendMessage();
+      }
+    };
+
+    const textareaElement = textareaRef.current;
+    if (textareaElement) {
+      textareaElement.addEventListener('keypress', handleKeyPress);
+    }
+
+    return () => {
+      if (textareaElement) {
+        textareaElement.removeEventListener('keypress', handleKeyPress);
+      }
+    };
+  }, [input]);
+
   const handlePromptClick = (prompt) => {
     setInput(prompt);
   };
@@ -53,7 +75,15 @@ const ChatBot = () => {
       Symptom Checker Chatbot
     </h1>
       <div className='m-4'>
-        <h3 className="scroll-m-20 text-2xl text-white font-semibold tracking-tight"> Predefined Prompts:</h3>
+        <div className='flex justify-center items-center'>
+        <Image 
+        src={BotImage} 
+        alt='bot-image'
+        width={200}
+        height={200}
+        />
+        </div>
+        <h3 className="scroll-m-20 text-2xl text-white font-semibold tracking-tight"> Suggestions :</h3>
         <ul className="my-6 ml-6 list-disc flex flex-wrap">
         {predefinedPrompts.map((prompt, index) => (
             <li 
@@ -74,7 +104,8 @@ const ChatBot = () => {
 
       </div>
       <div className='flex flex-row'>
-      <Textarea 
+      <Textarea
+        ref={textareaRef} 
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
