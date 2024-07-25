@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import Loading from '@/components/ui/loading';
 import Image from 'next/image';
-import BotImage from '@/public/bot-image.webp'
+import BotImage from '@/public/giphy.webp'
 const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
